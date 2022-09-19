@@ -383,19 +383,19 @@ def create_randomized_cards(player_hand_numeric):
 def main():
     # Process command line arguments
     parser = argparse.ArgumentParser(description='Simulates a game of Texas Hold\'em with two cards.')
-    parser.add_argument('--iterations', type=int, help='Number of iterations to run the simulation. For best results, use a large number. (>500)')
-    parser.add_argument('--your_cards', type=str, help='Your two cards. Format: "2h3d"')
+    parser.add_argument('--iters', type=int, required=True, help='Number of iterations to run the simulation. For best results, use a large number. (>500)')
+    parser.add_argument('--hand', type=str, required=True, help='Your two cards. Format: "2h3d"')
     args = parser.parse_args()
-    if args.iterations < 500:
+    if args.iters < 500:
         print('Warning: Number of iterations is less than 500. Results may be inaccurate.')
-    iterations = args.iterations
+    iterations = args.iters
 
-    if not is_valid_card(args.your_cards[0:2]):
+    if not is_valid_card(args.hand[0:2]):
         exit("Player 1 Card 1 Invalid")
-    if not is_valid_card(args.your_cards[2:4]):
+    if not is_valid_card(args.hand[2:4]):
         exit("Player 1 Card 2 Invalid")
 
-    player_hand = args.your_cards
+    player_hand = args.hand
     player_hand_numeric = hand_as_numeric(player_hand)
 
     opponent_hand_numeric, community_cards_numeric = create_randomized_cards(player_hand_numeric)
