@@ -356,7 +356,7 @@ def create_random_hand(numcards):
     hand = []
     for i in range(numcards):
         card = []
-        card.append(random.randint(0, 51))
+        card.append(random.randint(0, 12))
         card.append(random.randint(0,3))
         hand.append(card)
     return hand
@@ -366,6 +366,19 @@ def intersection(lst1, lst2, lst3):
     tup2 = map(tuple, lst2) 
     tup3 = map(tuple, lst3)
     return list(map(list, set(tup1).intersection(tup2).intersection(tup3)))
+
+def create_randomized_cards(player_hand_numeric):
+    while True:
+        opponent_hand_numeric = create_random_hand(2)
+        if (player_hand_numeric != opponent_hand_numeric):
+            break
+
+    while True:
+        community_cards_numeric = create_random_hand(5)
+        if intersection(player_hand_numeric, opponent_hand_numeric, community_cards_numeric) == []:
+            break
+    
+    return opponent_hand_numeric, community_cards_numeric
 
 def main():
     # Process command line arguments
@@ -385,25 +398,25 @@ def main():
     player_hand = args.your_cards
     player_hand_numeric = hand_as_numeric(player_hand)
 
-    while True:
-        opponent_hand_numeric = create_random_hand(2)
-        if (player_hand_numeric != opponent_hand_numeric):
-            break
-
-    while True:
-        community_cards_numeric = create_random_hand(5)
-        if intersection(player_hand_numeric, opponent_hand_numeric, community_cards_numeric) == []:
-            break
+    opponent_hand_numeric, community_cards_numeric = create_randomized_cards(player_hand_numeric)
 
     # Initialize counters
     totals = [0, 0, 0]
-    print("Running simulation...")
-    print(player_hand_numeric, opponent_hand_numeric, community_cards_numeric)
-    print("help")
     # Monte Carlo Simulation
     for _ in range(iterations):
         best_hand1 = best_five(player_hand_numeric, community_cards_numeric)
         best_hand2 = best_five(opponent_hand_numeric, community_cards_numeric)
+
+        while True:
+            opponent_hand_numeric = create_random_hand(2)
+            if (player_hand_numeric != opponent_hand_numeric):
+                break
+
+        while True:
+            community_cards_numeric = create_random_hand(5)
+            if intersection(player_hand_numeric, opponent_hand_numeric, community_cards_numeric) == []:
+                break
+
         totals[compare_hands(best_hand1, best_hand2)] += 1
     # Print results
     print ("Total Hands: %i" % (iterations))
