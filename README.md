@@ -46,5 +46,3 @@ Tie: 0.0%
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
-Of course, you can change the number of iterations, as well as the cards in your hand.
