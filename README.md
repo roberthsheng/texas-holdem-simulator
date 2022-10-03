@@ -1,4 +1,4 @@
-# texas-holdem-simulator
+# Texas Hold'em Simulator
 This is a Python implementation of a Texas Hold'em Monte Carlo Simulator.
 
 Currently, this only simulates heads-up poker. May consider creating option to add more players in the future.
